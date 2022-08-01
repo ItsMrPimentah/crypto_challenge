@@ -34,22 +34,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Crypto> items = [];
-  StreamSubscription listenChanges() {
-    var dio = Dio();
-    return Timer.periodic(const Duration(seconds: 20), (timer) {
-      dio
-          .get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur')
-          .then((response) {
-        final List<Crypto> newItems = List<Crypto>.from(response.data);
-        if (newItems.isNotEmpty) {
-          setState(() {
-            items.clear();
-            items.addAll(newItems);
-          });
-        }
-      });
-    })
-  }
 
   Future _getcryptos() async {
     var dio = Dio();
@@ -65,9 +49,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    listenChanges().listen((event) {
-      print(event.data);
-    });
   }
 
   @override
